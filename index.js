@@ -47,6 +47,10 @@ module.exports = function(options) {
 	 * @return {void}
 	 */
 	function serveImage(server, req, callback) {
+		if (source == undefined) {
+			console.log(JSON.stringify(req));
+			return callback('地图' + req.layer + '发布错误');
+		}
 		source.getTile(req.z, req.x, req.y, function(err, buffer, headers) {
 			if (err) return callback(err);
 			callback(err, buffer, _.clone(headers));
